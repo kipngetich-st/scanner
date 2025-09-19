@@ -76,11 +76,6 @@ export const signOut = async () => {
   }
 }
 
-export const getSession = async () => {
-  const result = await auth.api.getSession({ headers: await headers() });
-  return result;
-}
-
 export const resendVerificationEmail = async (email: string) => {
   try {
     if (!email) {
