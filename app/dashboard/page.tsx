@@ -4,13 +4,10 @@ import { getUserAccessInfo } from "@/lib/models/user-access";
 import { redirect } from "next/navigation";
 import DashboardClient from "./dashboard-client";
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 
 export default async function DashboardPage() {
   "use server"
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
+  const session = await auth.api.getSession();
 
   if (!session) {
     redirect("/signin");
