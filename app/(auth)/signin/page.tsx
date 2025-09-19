@@ -1,9 +1,9 @@
 import { SignInForm } from '@/components/auth/signin-form';
-import { getSession } from '@/lib/actions/auth-actions';
+import { authClient } from '@/lib/auth-client';
 import { redirect } from 'next/navigation';
 
 export default async function SignInPage() {
-  const session = await getSession();
+  const {data: session} = await authClient.useSession()
 
   if (session) {
     redirect("/dashboard");
