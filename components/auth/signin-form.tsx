@@ -9,8 +9,6 @@ import { Github, Mail, Shield } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { signIn, signUp } from '@/lib/actions/auth-actions';
 import { useRouter } from 'next/navigation';
-import { socialSignIn } from '@/lib/auth-client';
-import { set } from 'better-auth';
 
 export function SignInForm() {
   const [email, setEmail] = useState('');
@@ -96,24 +94,6 @@ export function SignInForm() {
     }
   };
 
-  const handleOauthSignIn = async (provider: "google" | "github") => {
-    try {
-      await socialSignIn(provider);
-      toast({
-        title: 'Success',
-        description: 'Sign-in successful',
-        variant: 'success',
-      })
-    } catch (err) {
-      console.log(err)
-      toast({
-        title: 'Error',
-        description: 'Something went wrong with ' + provider + '. Please try again.',
-        variant: 'destructive',
-      })
-    }
-  }
-
   return (
     <Card className="w-full max-w-md bg-white/95 backdrop-blur-sm shadow-2xl border-0">
       <CardHeader className="space-y-1">
@@ -134,7 +114,6 @@ export function SignInForm() {
           <Button
             variant="outline"
             className="h-12 border-2 hover:border-blue-300 hover:bg-blue-50"
-            onClick={() => handleOauthSignIn("google")}
             disabled={isLoading}
           >
             <Mail className="mr-2 h-4 w-4" />
@@ -143,7 +122,6 @@ export function SignInForm() {
           <Button
             variant="outline"
             className="h-12 border-2 hover:border-gray-300 hover:bg-gray-50"
-            onClick={() => handleOauthSignIn("github")}
             disabled={isLoading}
           >
             <Github className="mr-2 h-4 w-4" />
