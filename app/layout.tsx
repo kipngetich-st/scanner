@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/navbar";
 import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
-import { getSession } from "@/lib/actions/auth-actions";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "WebScanner - Vulnerability Scanner",
@@ -14,7 +15,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSession();
+  const session = await auth.api.getSession({
+    headers: headers()
+  });
   return (
     <html lang="en">
       <body className="antialiased">
