@@ -9,7 +9,7 @@ import { headers } from "next/headers";
 export default async function DashboardPage() {
   "use server"
   const session = await auth.api.getSession({
-    headers: headers()
+    headers: await headers()
   });
 
   if (!session) {
