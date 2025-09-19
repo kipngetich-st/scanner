@@ -3,13 +3,10 @@ import { getUserSubscription } from "@/lib/models/subscription";
 import { getUserAccessInfo } from "@/lib/models/user-access";
 import { redirect } from "next/navigation";
 import DashboardClient from "./dashboard-client";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { authClient } from "@/lib/auth-client";
 
 export default async function DashboardPage() {
-  const session = await auth.api.getSession({
-    headers: headers()
-  });
+  const {data: session} = await authClient.getSession()
 
   if (!session) {
     redirect("/signin");
