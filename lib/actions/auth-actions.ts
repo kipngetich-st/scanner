@@ -50,7 +50,6 @@ export const signIn = async (email: string, password: string) => {
   try {
     const data = await auth.api.signInEmail({
       body: { email, password },
-      headers: await headers(),
     });
     return { success: true, data };
 
