@@ -2,12 +2,15 @@ import { getDailyScanCount } from "@/lib/models/scan-limits";
 import { getUserSubscription } from "@/lib/models/subscription";
 import { getUserAccessInfo } from "@/lib/models/user-access";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import DashboardClient from "./dashboard-client";
 import { auth } from "@/lib/auth";
 
 export default async function DashboardPage() {
   "use server"
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
 
   if (!session) {
     redirect("/signin");
