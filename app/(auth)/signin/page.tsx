@@ -1,10 +1,9 @@
 import { SignInForm } from '@/components/auth/signin-form';
 import { getSession } from '@/lib/actions/auth-actions';
-import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export default async function SignInPage() {
-  const session = await getSession(await headers());
+  const session = await getSession();
 
   if (session) {
     redirect("/dashboard");

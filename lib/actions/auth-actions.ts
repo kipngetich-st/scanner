@@ -2,11 +2,12 @@
 
 import { auth } from "@/lib/auth";
 import { APIError } from "better-auth";
+import { headers } from "next/headers";
 
-export const getSession = async (headersList: Headers) => {
+export const getSession = async () => {
   try {
     const session = await auth.api.getSession({
-      headers: headersList,
+      headers: await headers(),
     });
     return session;
   } catch (error) {
