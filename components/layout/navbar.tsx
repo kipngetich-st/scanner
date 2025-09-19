@@ -12,29 +12,29 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Shield, LogOut, User, Settings } from 'lucide-react';
 import Link from 'next/link';
-import { auth } from '@/lib/auth';
 import { signOut } from '@/lib/actions/auth-actions';
 import { useToast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
 
 export function Navbar() {
   const { toast } = useToast()
   const router = useRouter()
 
-  const {data: session} = authClient.useSession()
+  const { data: session } = authClient.useSession()
 
   const handleSignOut = async () => {
-    
-    const response = await signOut()
-    if (!response) return
-
-    router.push('/signin')
-    router.refresh()
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/signin");
+        },
+      },
+    });
     toast({
-      title: 'Signed out',
-      description: 'You have been signed out.',
-      variant: 'info',
+      title: 'Logged Out',
+      description: "Logged in successfully",
+      variant: 'default',
     })
   }
 
@@ -76,12 +76,12 @@ export function Navbar() {
                 </Link>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                      <Avatar className="h-8 w-8 cursor-pointer">
-                        <AvatarImage src={session.user?.image || ''} alt={session.user?.name || ''} />
-                        <AvatarFallback>
-                          {(session.user?.name?.[0] ?? session.user?.email?.[0] ?? 'U').toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
+                    <Avatar className="h-8 w-8 cursor-pointer">
+                      <AvatarImage src={session.user?.image || ''} alt={session.user?.name || ''} />
+                      <AvatarFallback>
+                        {(session.user?.name?.[0] ?? session.user?.email?.[0] ?? 'U').toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56" align="end" forceMount>
                     <DropdownMenuLabel className="font-normal">

@@ -11,7 +11,7 @@ import { signIn, signUp } from '@/lib/actions/auth-actions';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
 
-export async function SignInForm() {
+export function SignInForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -20,7 +20,7 @@ export async function SignInForm() {
   const { toast } = useToast();
   const router = useRouter();
 
-  const {data: session} = await authClient.useSession()
+  const {data: session} = authClient.useSession()
 
   if (session) {
     router.push('/dashboard')
