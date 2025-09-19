@@ -4,6 +4,18 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { APIError } from "better-auth";
 
+export const getSession = async () => {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    return session;
+  } catch (error) {
+    console.error("Get session error:", error);
+    return null;
+  }
+}
+
 export const signUp = async (name: string, email: string, password: string) => {
   try {
     const data = await auth.api.signUpEmail({
