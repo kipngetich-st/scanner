@@ -16,12 +16,13 @@ import { auth } from '@/lib/auth';
 import { signOut } from '@/lib/actions/auth-actions';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
+import { authClient } from '@/lib/auth-client';
 
-type Session = typeof auth.$Infer.Session
-
-export function Navbar({session}: {session: Session | null}) {
+export function Navbar() {
   const { toast } = useToast()
   const router = useRouter()
+
+  const {data: session} = authClient.useSession()
 
   const handleSignOut = async () => {
     
@@ -92,7 +93,7 @@ export function Navbar({session}: {session: Session | null}) {
                           {session.user?.email}
                         </p>
                         <p className="text-xs leading-none text-muted-foreground capitalize">
-                          {session.user?.role} Plan
+                          Free Plan
                         </p>
                       </div>
                     </DropdownMenuLabel>
