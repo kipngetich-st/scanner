@@ -9,8 +9,9 @@ import { Github, Mail, Shield } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { signIn, signUp } from '@/lib/actions/auth-actions';
 import { useRouter } from 'next/navigation';
+import { authClient } from '@/lib/auth-client';
 
-export function SignInForm() {
+export async function SignInForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -18,6 +19,12 @@ export function SignInForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
+
+  const {data: session} = await authClient.useSession()
+
+  if (session) {
+    router.push('/dashboard')
+  }
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();

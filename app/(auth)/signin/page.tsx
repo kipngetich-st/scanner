@@ -1,13 +1,8 @@
 import { SignInForm } from '@/components/auth/signin-form';
-import { authClient } from '@/lib/auth-client';
-import { redirect } from 'next/navigation';
 
 export default async function SignInPage() {
-  const {data: session} = await authClient.useSession()
+  
 
-  if (session) {
-    redirect("/dashboard");
-  }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-12 px-4 sm:px-6 lg:px-8">
       {/* Background Pattern */}
